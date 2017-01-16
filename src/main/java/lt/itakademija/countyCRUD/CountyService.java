@@ -1,4 +1,4 @@
-package lt.itakademija.candidateCRUD;
+package lt.itakademija.countyCRUD;
 
 import java.util.List;
 
@@ -7,24 +7,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CandidateService {
+public class CountyService {
 
 	@Autowired
-	private CandidateRepository repository;
+	private CountyRepository repository;
 
 	@Transactional
-	public CandidateEntity save(CandidateEntity c) {
+	public CountyEntity save(CountyEntity c) {
 		return repository.save(c);
 	}
 
 	@Transactional(readOnly = true)
-	public List<CandidateEntity> findAll() {
+	public List<CountyEntity> findAll() {
 		return repository.findAll();
 	}
 
 	@Transactional
-	public CandidateEntity delete(Long id) {
+	public CountyEntity delete(Long id) {
 		return repository.delete(id);
 	}
-
 }

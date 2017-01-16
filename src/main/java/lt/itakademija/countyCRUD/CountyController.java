@@ -1,4 +1,4 @@
-package lt.itakademija.candidateCRUD;
+package lt.itakademija.countyCRUD;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CandidateController {
+public class CountyController {
 
 	@Autowired
-	private CandidateService service;
+	private CountyService service;
 
-	@PostMapping("/api/candidate")
-	public CandidateEntity createOrUpdateCandidate(@RequestBody CandidateEntity c) {
+	@PostMapping("/api/county")
+	public CountyEntity createOrUpdateCounty(@RequestBody CountyEntity c) {
 		return service.save(c);
 	}
 
-	@GetMapping("/api/candidate")
-	public Iterable<CandidateEntity> candidates() {
+	@GetMapping("/api/county")
+	public Iterable<CountyEntity> countys() {
 		return service.findAll();
 	}
 
-	@DeleteMapping("/api/candidate/{id}")
-	public CandidateEntity delete(@PathVariable Long id) {
+	@DeleteMapping("/api/county/{id}")
+	public CountyEntity delete(@PathVariable Long id) {
 		return service.delete(id);
 	}
 }

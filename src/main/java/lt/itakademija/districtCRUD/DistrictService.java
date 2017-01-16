@@ -20,4 +20,9 @@ public class DistrictService {
 	public List<DistrictEntity> findAll() {
 		return repository.findAll();
 	}
+
+	@Transactional
+	public DistrictEntity delete(Long id) {
+		return repository.delete(id);
+	}
 }
