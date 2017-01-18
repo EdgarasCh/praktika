@@ -13,14 +13,14 @@ public class CandidateRepository {
 	@Autowired
 	private EntityManager em;
 
-	public CandidateEntity save(CandidateEntity c) {
+	public void save(CandidateEntity c) {
 		if (c.getId() == null) {
 			em.persist(c);
-			return c;
+
 		} else {
 			CandidateEntity merged = em.merge(c);
 			em.persist(merged);
-			return merged;
+
 		}
 	}
 
@@ -33,5 +33,7 @@ public class CandidateRepository {
 		em.remove(c);
 		return c;
 	}
+	
+
 
 }
