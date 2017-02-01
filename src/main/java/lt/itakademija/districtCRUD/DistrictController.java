@@ -23,6 +23,11 @@ public class DistrictController {
 	public Iterable<DistrictEntity> districts() {
 		return service.findAll();
 	}
+	
+	@GetMapping("/api/county/districts/{countyId}")
+	public Iterable<DistrictEntity> districts(@PathVariable Long countyId) {
+		return service.findAllCountyDistricts(countyId);
+	}
 
 	@DeleteMapping("/api/district/{id}")
 	public DistrictEntity delete(@PathVariable Long id) {

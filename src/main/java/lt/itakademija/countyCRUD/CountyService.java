@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lt.itakademija.candidateCRUD.CandidateEntity;
+
 @Service
 public class CountyService {
 
@@ -15,6 +17,11 @@ public class CountyService {
 	@Transactional
 	public CountyEntity save(CountyEntity c) {
 		return repository.save(c);
+	}
+	
+	@Transactional(readOnly = true)
+	public CountyEntity findCounty(Long id) {
+		return repository.findCounty(id);
 	}
 
 	@Transactional(readOnly = true)

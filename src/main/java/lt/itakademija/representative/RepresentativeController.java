@@ -1,5 +1,4 @@
-package lt.itakademija.countyCRUD;
-
+package lt.itakademija.representative;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,33 +8,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 @RestController
-public class CountyController {
+public class RepresentativeController {
 
 	@Autowired
-	private CountyService service;
+	private RepresentativeService service;
 
-	@PostMapping("/api/county")
-
-	public CountyEntity createOrUpdateCounty(@RequestBody CountyEntity c) {
-		return service.save(c);
+	@PostMapping("/api/representative")
+	public RepresentativeEntity createOrUpdateDistrict(@RequestBody RepresentativeEntity d) {
+		return service.save(d);
 	}
 
-	@GetMapping("/api/county/{id}")
-	public CountyEntity findCounty(@PathVariable Long id) {
-		return service.findCounty(id);
-	}
-
-	@GetMapping("/api/county")
-	public Iterable<CountyEntity> counties() {
+	@GetMapping("/api/representative")
+	public Iterable<RepresentativeEntity> districts() {
 		return service.findAll();
 	}
+	
 
-	@DeleteMapping("/api/county/{id}")
-	public CountyEntity delete(@PathVariable Long id) {
+
+	@DeleteMapping("/api/representative/{id}")
+	public RepresentativeEntity delete(@PathVariable Long id) {
 		return service.delete(id);
 	}
-
 }

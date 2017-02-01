@@ -5,31 +5,45 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import lt.itakademija.countyCRUD.CountyEntity;
+
 @Entity
 public final class DistrictEntity {
 
+	
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long districtId;	
+	@NotEmpty
 	private String districtName;
 	private String districtAddress;
 	private int districtElectors;
+	// foreignkey
+	private Long countyId;
 
 	public DistrictEntity() {
 	}
 
-	public DistrictEntity(String districtName, String districtAddress, int districtElectors) {
+	public DistrictEntity(String districtName, String districtAddress, int districtElectors, Long countyId) {
 		this.districtName = districtName;
 		this.districtAddress = districtAddress;
 		this.districtElectors = districtElectors;
+		this.countyId = countyId;
+		
+
 	}
 
 	public Long getId() {
-		return id;
+		return districtId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.districtId = id;
 	}
 
 	public String getDistrictName() {
@@ -56,4 +70,13 @@ public final class DistrictEntity {
 		this.districtElectors = districtElectors;
 	}
 
+	public Long getCountyId() {
+		return countyId;
+	}
+
+	public void setCountyId(Long countyId) {
+		this.countyId = countyId;
+	}
+
+	
 }
