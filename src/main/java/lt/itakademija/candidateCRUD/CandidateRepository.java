@@ -24,12 +24,13 @@ public class CandidateRepository {
 
 
 		if (!findAll().contains(c)) {
+
 			em.persist(c);
-			return c;
+
 		} else {
 			CandidateEntity merged = em.merge(c);
 			em.persist(merged);
-			return merged;
+
 		}
 
 	}
@@ -57,5 +58,7 @@ public class CandidateRepository {
 		em.remove(c);
 		return c;
 	}
+	
+
 
 }

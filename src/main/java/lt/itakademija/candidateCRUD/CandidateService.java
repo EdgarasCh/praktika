@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -25,8 +26,8 @@ public class CandidateService {
 	private CandidateRepository repository;
 
 	@Transactional
-	public CandidateEntity save(CandidateEntity c) {
-		return repository.save(c);
+	public void save(CandidateEntity c) {
+		repository.save(c);
 	}
 
 	@Transactional(readOnly = true)
@@ -43,6 +44,7 @@ public class CandidateService {
 	public CandidateEntity delete(Long id) {
 		return repository.delete(id);
 	}
+
 
 	// Trina visus kandidatus kurie priklauso tam tikrai partijai(Partijos
 	// kandidatu saraso trinimas)
@@ -69,9 +71,11 @@ public class CandidateService {
 		String firsName = "";
 		String lastName = "";
 		String dateString = "";
+
 		String personCode = "";
 		String description = "";
 		Long countyId = 0L;
+
 
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
@@ -82,6 +86,7 @@ public class CandidateService {
 				firsName = values[0];
 				lastName = values[1];
 				dateString = values[2];
+
 				personCode = values[3];
 				description = values[4];
 
@@ -139,6 +144,7 @@ public class CandidateService {
 			e.printStackTrace();
 		}
 	}
+
 
 
 }
