@@ -2,7 +2,9 @@ package lt.itakademija.districtCRUD;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -24,6 +26,11 @@ public class DistrictRepository {
 
 	public List<DistrictEntity> findAll() {
 		return em.createQuery("SELECT d from DistrictEntity d").getResultList();
+	}
+
+	public List<DistrictEntity> findAllCountyDistricts(Long countyId) {
+		return em.createQuery("SELECT d from DistrictEntity d WHERE d.countyId = :countyId")
+				.setParameter("countyId", countyId).getResultList();
 	}
 
 	public DistrictEntity delete(Long id) {

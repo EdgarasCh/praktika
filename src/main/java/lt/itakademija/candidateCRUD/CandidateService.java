@@ -14,6 +14,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -32,13 +35,26 @@ public class CandidateService {
 		return repository.findAll();
 	}
 
+	@Transactional(readOnly = true)
+	public CandidateEntity findCandidate(String personCode) {
+		return repository.findCandidate(personCode);
+	}
+
 	@Transactional
 	public CandidateEntity delete(Long id) {
 		return repository.delete(id);
 	}
 
+
+	// Trina visus kandidatus kurie priklauso tam tikrai partijai(Partijos
+	// kandidatu saraso trinimas)
 	@Transactional
-	public void saveFromCSV(MultipartFile CSVfile, String partyName) {
+	public int deleteCandidatesByPartyId(int id) {
+		return repository.deleteCandidatesByPartyId(id);
+	}
+
+	@Transactional
+	public void saveMultiPartyListFromCSV(MultipartFile CSVfile, int partyId) {
 
 		File file = new File(CSVfile.getOriginalFilename());
 		try {
@@ -55,7 +71,11 @@ public class CandidateService {
 		String firsName = "";
 		String lastName = "";
 		String dateString = "";
+
+		String personCode = "";
 		String description = "";
+		Long countyId = 0L;
+
 
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
@@ -66,31 +86,65 @@ public class CandidateService {
 				firsName = values[0];
 				lastName = values[1];
 				dateString = values[2];
-				description = values[3];
 
-				repository.save(new CandidateEntity(firsName, lastName, parseDate(dateString), partyName, description));
+				personCode = values[3];
+				description = values[4];
+
+				repository.save(new CandidateEntity(firsName, lastName, dateString, personCode, partyId, countyId,
+						description));
 			}
 
 		} catch (IOException e) {
 
 			e.printStackTrace();
 		}
-
 	}
+	
+	
+	@Transactional
+	public void saveSinglePartyListFromCSV(MultipartFile CSVfile, Long countyId) {
 
-	public Date parseDate(String dateString) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = null;
-
+		File file = new File(CSVfile.getOriginalFilename());
 		try {
+			file.createNewFile();
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(CSVfile.getBytes());
+			fos.close();
+		} catch (IOException e) {
 
-			date = dateFormat.parse(dateString);
-
-		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		String data = "";
+		String[] values = {};
+		String firsName = "";
+		String lastName = "";
+		String dateString = "";
+		String personCode = "";
+		String description = "";
+		Integer partyId = 0;
 
-		return date;
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+			while ((data = br.readLine()) != null) {
+
+				values = data.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+
+				firsName = values[0];
+				lastName = values[1];
+				dateString = values[2];
+				personCode = values[3];
+				description = values[4];
+
+				repository.save(new CandidateEntity(firsName, lastName, dateString, personCode, partyId, countyId,
+						description));
+			}
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
+
+
 
 }

@@ -20,6 +20,11 @@ public class DistrictService {
 	public List<DistrictEntity> findAll() {
 		return repository.findAll();
 	}
+	
+	@Transactional(readOnly = true)
+	public List<DistrictEntity> findAllCountyDistricts(Long countyId) {
+		return repository.findAllCountyDistricts(countyId);
+	}
 
 	@Transactional
 	public DistrictEntity delete(Long id) {

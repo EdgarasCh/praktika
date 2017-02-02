@@ -1,41 +1,49 @@
 package lt.itakademija.candidateCRUD;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public final class CandidateEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String personCode;
+	@Size(max = 45)
 	private String firstName;
+	@Size(max = 45)
 	private String lastName;
-	private Date date;
-	private String party;
+	private String date;
+	@Size(max = 1000)
 	private String description;
+	private Long countyId;
+	private int partyId;
 
 	public CandidateEntity() {
 	}
 
-	public CandidateEntity(String firstName, String lastName, Date date, String party, String description) {
+	public CandidateEntity(String firstName, String lastName, String date, String personCode, int partyId,long countyId,
+			String description) {
+
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.date = date;
-		this.party = party;
+		this.personCode = personCode;
+		this.partyId = partyId;
+		this.countyId = countyId;
 		this.description = description;
 	}
 
-	public Long getId() {
-		return id;
+	public String getPersonCode() {
+		return personCode;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setPersonCode(String personCode) {
+		this.personCode = personCode;
 	}
 
 	public String getFirstName() {
@@ -54,20 +62,12 @@ public final class CandidateEntity {
 		this.lastName = lastName;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
-	}
-
-	public String getParty() {
-		return party;
-	}
-
-	public void setParty(String party) {
-		this.party = party;
 	}
 
 	public String getDescription() {
@@ -77,5 +77,15 @@ public final class CandidateEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public int getPartyId() {
+		return partyId;
+	}
+
+	public void setPartyId(int partyId) {
+		this.partyId = partyId;
+	}
+
+	
 
 }
